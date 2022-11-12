@@ -20,7 +20,7 @@ function getLocation() {
     if (req.readyState == 4 && req.status == 200) {
       latLocation = JSON.parse(req.responseText)[0].lat;
       lonLocation = JSON.parse(req.responseText)[0].lon;
-      setTimeout(getWeather, 100);
+      setTimeout(getWeather, 50);
     }
   };
   req.open(
