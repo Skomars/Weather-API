@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Acme&family=Secular+One&display=swap"
+      rel="stylesheet"
+    />
+    <link href="../dist/output.css" rel="stylesheet" />
+    <script defer src="main.js"></script>
+  </head>
+
+  <body
+    class="flex flex-col items-center py-2 text-white h-full xs:flex xs:items-center"
+  >
+    <main class="flex flex-col items-center py-2">
+      <div class="weather-container">
+        <!-- Weatherdata -->
+      </div>
+
+      <!-- Template START -->
+      <template class="template">
+        <div class="weather-container flex flex-col items-center">
+          <div class="location text-3xl text-center leading-7"></div>
+          <div class="date text-lg leading-9"></div>
+          <div class="flex flex-col items-center sm:flex-row sm:justify-center">
+            <div class="icon-wrapper">
+              <img class="icon w-48 h-auto brightness-150" src="" alt="" />
+            </div>
+            <div
+              class="temperature-wrapper flex justify-center gap-3 sm:flex-col"
+            >
+              <div class="currentTemp text-6xl"></div>
+              <div
+                class="extremeTemps flex flex-col justify-center gap-1 sm:gap-6 sm:flex-row-reverse"
+              >
+                <div class="maxTemp text-sm"></div>
+                <div class="minTemp text-sm"></div>
+              </div>
+            </div>
+          </div>
+          <div class="weatherDescription text-2xl"></div>
+          <div class="lastUpdate text-xs italic pt-5"></div>
+        </div>
+      </template>
+      <!-- Template END -->
+      <button
+        id="Updatebutton"
+        class="bg-slate-800 border text-xs text-center my-2 px-2 border-slate-900 text-white rounded-md align flex items-center hover:bg-slate-300 hover:text-slate-800 transition-all duration-300"
+      >
+        Update
+      </button>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body,
+html {
+  box-sizing: border-box;
+}
+body {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+/* Sets background images dynamically */
+.clear_day {
+  background-image: url("../src/img/clear_day.jpg");
+}
+
+.clear_night {
+  background-image: url("../src/img/clear_night.jpg");
+}
+
+.clouds_day {
+  background-image: url("../src/img/clouds_day.jpg");
+}
+
+.clouds_night {
+  background-image: url("../src/img/clouds_night.jpg");
+}
+
+.rainy_day {
+  background-image: url("../src/img/rain_day.jpg");
+}
+
+.rainy_night {
+  background-image: url("../src/img/rain_night.jpg");
+}
+
+.snow {
+  background-image: url("../src/img/snow.webp");
+}
+
+.thunderstorm {
+  background-image: url("../src/img/thunderstorm.jpg");
+}
+
+.mist {
+  background-image: url("../src/img/mist.jpg");
+}
