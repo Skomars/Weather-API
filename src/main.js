@@ -1,6 +1,11 @@
-// GPS coordinates
-let latLocation = null;
-let lonLocation = null;
+/* Weather API key (Set this to hidden before production)*/
+const API_KEY = "ca2bb6c3e2d74b96394c9d49924e96c9";
+
+/* Location to get GPS coordinates from */
+let selectedLocation = "Halmstad";
+
+/* Coordinate variables */
+let latLocation, lonLocation;
 
 // Init
 init = () => {
@@ -13,162 +18,62 @@ init = () => {
 };
 init();
 
-// getLocation() - Get GPS location
-function getLocation() {
-  const req = new XMLHttpRequest();
-  req.onreadystatechange = function () {
-    if (req.readyState == 4 && req.status == 200) {
-      latLocation = JSON.parse(req.responseText)[0].lat;
-      lonLocation = JSON.parse(req.responseText)[0].lon;
-      setTimeout(getWeather, 50);
+// Get lat/lon coordinates from 'selectedLocation' variable
+async function getLocation() {
+  const locationRequest = new XMLHttpRequest();
+  locationRequest.onreadystatechange = function () {
+    if (locationRequest.readyState == 4 && locationRequest.status == 200) {
+      latLocation = JSON.parse(locationRequest.responseText)[0].lat;
+      lonLocation = JSON.parse(locationRequest.responseText)[0].lon;
+
+      // Run main getWeather function
+      getWeather();
     }
   };
-  req.open(
+  locationRequest.open(
     "GET",
-    `https://api.openweathermap.org/geo/1.0/direct?q=Halmstad&limit=1&appid=ca2bb6c3e2d74b96394c9d49924e96c9`,
+    `https://api.openweathermap.org/geo/1.0/direct?q=${selectedLocation}&limit=1&appid=${API_KEY}`,
     true
   );
-  req.send();
+  locationRequest.send();
 }
 
-// getWeather() - Get weatherdata
+// Main function
 function getWeather() {
-  const req = new XMLHttpRequest();
-
-  req.onreadystatechange = function () {
-    if (req.readyState == 4 && req.status == 200) {
-      // Convert from JSON string to a javascript object
-      const resp = JSON.parse(req.responseText);
+  const weatherRequest = new XMLHttpRequest();
+  weatherRequest.onreadystatechange = function () {
+    if (weatherRequest.readyState == 4 && weatherRequest.status == 200) {
+      const response = JSON.parse(weatherRequest.responseText); // JSON string -> JS object
+      console.log(response);
 
       // Temperatures in celsius
-      const temp = Math.floor(resp.main.temp);
-      const tempMax = Math.floor(resp.main.temp_max);
-      const tempMin = Math.floor(resp.main.temp_min);
+      const temp = Math.floor(response.main.temp);
+      const tempMax = Math.floor(response.main.temp_max);
+      const tempMin = Math.floor(response.main.temp_min);
 
       // Get main weather data
-      const weatherDescr = resp.weather[0].description;
+      const weatherDescr = response.weather[0].description;
       const weatherDescription =
         weatherDescr.charAt(0).toUpperCase() + weatherDescr.slice(1);
-      const weatherIcon = String(resp.weather[0].icon);
+      const weatherIcon = response.weather[0].icon;
       const iconUrl = `http://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
 
       // Get full location
-      const location = resp.name + ", " + resp.sys.country;
+      const location = response.name + ", " + response.sys.country;
 
-      // Fetching local date and time from the Date object
-      // Used for the time of update
+      // Fetch local date and time from the Date object
       const date = new Date();
-      const weekday = date.getDay();
-      const hours = date.getHours();
-      const minutes = date.getMinutes();
-      const dateToday = date.getDate();
-      const month = date.getMonth();
 
-      // Formatting of minutevalues between 0-9
-      let minutesFormatted;
-      if (minutes == 0 || 1 || 2 || 3 || 4 || 5 || 6 || 7 || 8 || 9) {
-        minutesFormatted = String(minutes).padStart(2, "0");
-      } else {
-        minutesFormatted = String(minutes);
-      }
+      // Get current date
+      const currentDate = getCurrentDate(date);
 
-      // Formatting of hourvalues between 0-9
-      let hoursFormatted;
-      if (hours == 0 || 1 || 2 || 3 || 4 || 5 || 6 || 7 || 8 || 9) {
-        hoursFormatted = String(hours).padStart(2, "0");
-      } else {
-        hoursFormatted = String(hours);
-      }
+      // Get timestamp of the latest update
+      const timestamp = getTime(date);
 
-      // Get day of the week
-      const weekDays = [
-        "Sunday",
-        "Monday",
-        "Thuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-      ];
-
-      // Get month
-      const months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-      ];
-
-      // Applying a background class depending of the weathericon data.
-      // The weathericon holds the day/night information.
-      let weatherBackground;
-      switch (weatherIcon) {
-        case "01d":
-          weatherBackground = "clear_day";
-          break;
-
-        case "01n":
-          weatherBackground = "clear_night";
-          break;
-
-        case "02d":
-        case "03d":
-        case "04d":
-          weatherBackground = "clouds_day";
-          break;
-
-        case "02n":
-        case "03n":
-        case "04n":
-          weatherBackground = "clouds_night";
-          break;
-
-        case "09d":
-        case "10d":
-          weatherBackground = "rainy_day";
-          break;
-
-        case "09n":
-        case "10n":
-          weatherBackground = "rainy_night";
-          break;
-
-        case "11d":
-        case "11n":
-          weatherBackground = "thunderstorm"; // Night and day
-          break;
-
-        case "13d":
-          weatherBackground = "snow_day";
-          break;
-
-        case "13n":
-          weatherBackground = "snow_night";
-          break;
-
-        case "50d":
-        case "50n":
-          weatherBackground = "mist"; // Night and day
-          break;
-      }
-
-      // Apply weatherclass
+      // Get backgroundimage data, and apply a weatherclass to body
       document
         .getElementsByTagName("body")[0]
-        .classList.add(`${weatherBackground}`);
-
-      // Display the current date
-      const dayFormatted = weekDays[weekday];
-      const monthFormatted = months[month];
-      const dateStamp = dayFormatted + ", " + dateToday + " " + monthFormatted;
+        .classList.add(`${getBackgroundImage(weatherIcon)}`);
 
       const template = document.querySelector(".template").content;
       const templateCopy = document.importNode(template, true);
@@ -178,7 +83,7 @@ function getWeather() {
       templateCopy.querySelector(
         ".location"
       ).textContent = `The local weather at ${location}`;
-      templateCopy.querySelector(".date").textContent = dateStamp;
+      templateCopy.querySelector(".date").textContent = currentDate;
       templateCopy.querySelector(".currentTemp").textContent = `${temp}°C`;
       templateCopy.querySelector(".maxTemp").textContent = `H:${tempMax}`;
       templateCopy.querySelector(".minTemp").textContent = `L:${tempMin}`;
@@ -186,23 +91,26 @@ function getWeather() {
         weatherDescription;
       templateCopy.querySelector(
         ".lastUpdate"
-      ).textContent = `(Updated: ${hoursFormatted}:${minutesFormatted})`;
+      ).textContent = `(Updated: ${timestamp})`;
 
-      // Uppdate using template data
+      // Uppdating weatherdata
       const container = document.querySelector(".weather-container");
-      if (container.hasChildNodes()) {
-        container.textContent = "";
-        console.log("Updating weather..");
-      }
 
+      // If already showing weather, first clear the container from old data
+      if (container.hasChildNodes()) {
+        console.log("Remove old data..");
+        container.textContent = "";
+      }
+      // Append and update new data
       container.appendChild(templateCopy);
+      console.log("Updated with new data!");
     }
   };
 
-  req.open(
+  weatherRequest.open(
     "GET",
-    `https://api.openweathermap.org/data/2.5/weather?lat=${latLocation}&lon=${lonLocation}&appid=ca2bb6c3e2d74b96394c9d49924e96c9&units=metric`,
+    `https://api.openweathermap.org/data/2.5/weather?lat=${latLocation}&lon=${lonLocation}&appid=${API_KEY}&units=metric`,
     true
   );
-  req.send();
+  weatherRequest.send();
 }
