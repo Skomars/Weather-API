@@ -20,7 +20,7 @@
     class="flex flex-col items-center py-2 text-white h-full xs:flex xs:items-center"
   >
     <main class="flex flex-col items-center py-2">
-      <div class="weather-container">
+      <div class="weather-container cursor-default">
         <!-- Weatherdata -->
       </div>
 
@@ -50,9 +50,18 @@
         </div>
       </template>
       <!-- Template END -->
+      <div class="flex flex-col items-center">
+        <input
+          class="appearance-none block w-28 h-fit bg-gray-200 text-gray-700 border border-gray-200 rounded py-0 px-2 leading-4 focus:outline-none focus:bg-white focus:border-gray-500 mt-1"
+          type="text"
+          id="searchField"
+          placeholder="Location..."
+        />
+        <div class="felx flex-col text-center text-xs" id="errorMsg"></div>
+      </div>
       <button
         id="Updatebutton"
-        class="bg-slate-800 border text-xs text-center my-2 px-2 border-slate-900 text-white rounded-md align flex items-center hover:bg-slate-300 hover:text-slate-800 transition-all duration-300"
+        class="bg-slate-800 border text-xs text-center mt-1 px-2 border-slate-900 text-white rounded-md align flex items-center hover:bg-slate-300 hover:text-slate-800 transition-all duration-300"
       >
         Update
       </button>

@@ -13,38 +13,38 @@ body {
 }
 
 /* Sets background images dynamically */
-.clear_day {
+.weatherBg_clear_day {
   background-image: url("../src/img/clear_day.jpg");
 }
 
-.clear_night {
+.weatherBg_clear_night {
   background-image: url("../src/img/clear_night.jpg");
 }
 
-.clouds_day {
+.weatherBg_clouds_day {
   background-image: url("../src/img/clouds_day.jpg");
 }
 
-.clouds_night {
+.weatherBg_clouds_night {
   background-image: url("../src/img/clouds_night.jpg");
 }
 
-.rainy_day {
+.weatherBg_rainy_day {
   background-image: url("../src/img/rain_day.jpg");
 }
 
-.rainy_night {
+.weatherBg_rainy_night {
   background-image: url("../src/img/rain_night.jpg");
 }
 
-.snow {
+.weatherBg_snow {
   background-image: url("../src/img/snow.webp");
 }
 
-.thunderstorm {
+.weatherBg_thunderstorm {
   background-image: url("../src/img/thunderstorm.jpg");
 }
 
-.mist {
+.weatherBg_mist {
   background-image: url("../src/img/mist.jpg");
 }

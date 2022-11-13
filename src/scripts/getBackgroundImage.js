@@ -3,51 +3,55 @@ getBackgroundImage = (weatherIcon) => {
   let weatherBackground;
   switch (weatherIcon) {
     case "01d":
-      weatherBackground = "clear_day";
+      weatherBackground = "weatherBg_clear_day";
       break;
 
     case "01n":
-      weatherBackground = "clear_night";
+      weatherBackground = "weatherBg_clear_night";
       break;
 
     case "02d":
     case "03d":
     case "04d":
-      weatherBackground = "clouds_day";
+      weatherBackground = "weatherBg_clouds_day";
       break;
 
     case "02n":
     case "03n":
     case "04n":
-      weatherBackground = "clouds_night";
+      weatherBackground = "weatherBg_clouds_night";
       break;
 
     case "09d":
     case "10d":
-      weatherBackground = "rainy_day";
+      weatherBackground = "weatherBg_rainy_day";
       break;
 
     case "09n":
     case "10n":
-      weatherBackground = "rainy_night";
+      weatherBackground = "weatherBg_rainy_night";
       break;
 
     case "11d":
     case "11n":
-      weatherBackground = "thunderstorm"; // Night and day combined
+      weatherBackground = "weatherBg_thunderstorm"; // Night and day combined
       break;
 
     case "13d":
-      weatherBackground = "snow_day";
+      weatherBackground = "weatherBg_snow_day";
       break;
 
     case "13n":
-      weatherBackground = "snow_night";
+      weatherBackground = "weatherBg_snow_night";
       break;
 
     case "50d":
     case "50n":
-      weatherBackground = "mist"; // Night and day combined
+      weatherBackground = "weatherBg_mist"; // Night and day combined
+      break;
+
+    default: // No location found
+      weatherBackground = "weatherBg_not_found";
       break;
   }
 

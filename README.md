@@ -5,11 +5,11 @@
 - Shows timestamp for the latest update
 - Shows current temperature, and min/max temperature
 - Weatherdescription
-- Dynamic weathericons and backgrounds, based on weather icondata received
+- Dynamic weathericons and backgrounds, based on the weather icondata received
+- Primitive searchfunction.
 
 ##
 
 TODO´s:
 
 - Add information in readme. (copy structure from github examples, add info about node_modules)
-  (Maybe - Search and choose location feature)
