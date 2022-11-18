@@ -29,8 +29,5 @@ getCurrentDate = (dateObject) => {
     "December",
   ];
 
-  const weekdayFormatted = weekDays[weekday];
-  const monthFormatted = months[month];
-
-  return `${weekdayFormatted}, ${dateToday} ${monthFormatted}`;
+  return `${weekDays[weekday]}, ${dateToday} ${months[month]}`;
 };

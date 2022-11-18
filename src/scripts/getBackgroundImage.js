@@ -1,4 +1,4 @@
-// Returns a string used for setting a backgroundclass in main function
+// Returns a string used for setting a backgroundclass in getWeather function in main.js.
 getBackgroundImage = (weatherIcon) => {
   let weatherBackground;
   switch (weatherIcon) {
@@ -38,11 +38,8 @@ getBackgroundImage = (weatherIcon) => {
       break;
 
     case "13d":
-      weatherBackground = "weatherBg_snow_day";
-      break;
-
     case "13n":
-      weatherBackground = "weatherBg_snow_night";
+      weatherBackground = "weatherBg_snow"; // Night and day combined
       break;
 
     case "50d":
@@ -50,8 +47,9 @@ getBackgroundImage = (weatherIcon) => {
       weatherBackground = "weatherBg_mist"; // Night and day combined
       break;
 
-    default: // No location found
-      weatherBackground = "weatherBg_not_found";
+    // No weathericon found
+    // In theory we will never get to the default case. An unvalid location will be stopped in getLocation function.
+    default:
       break;
   }
 
