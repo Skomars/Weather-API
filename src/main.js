@@ -1,9 +1,9 @@
 /* Weather API key - Change this to your own */
-const API_KEY = "ca2bb6c3e2d74b96394c9d49924e96c9";
+const API_KEY = '';
 
 /* Location to get GPS coordinates from */
 let selectedLocation;
-const defaultLocation = "Halmstad"; // Initially searchvalue at start, and if searchbar is empty at buttonclick.
+const defaultLocation = 'Halmstad'; // Initially searchvalue at start, and if searchbar is empty at buttonclick.
 
 /* Location and coordinate variables */
 let locationName, latLocation, lonLocation;
@@ -12,30 +12,30 @@ let locationName, latLocation, lonLocation;
 init = () => {
   // Set default location at refresh of the page.
   selectedLocation = defaultLocation;
-  document.querySelector("#searchField").value = "";
+  document.querySelector('#searchField').value = '';
 
   // On pageload eventlistener.
-  document.addEventListener("DOMContentLoaded", (event) => {
+  document.addEventListener('DOMContentLoaded', (event) => {
     getLocation();
   });
 
   // Button eventlistener.
-  document.getElementById("Updatebutton").addEventListener("click", (event) => {
+  document.getElementById('Updatebutton').addEventListener('click', (event) => {
     getLocation();
   });
 
   // Clear searchfield from placeholder text when focused.
   document
-    .getElementsByTagName("input")[0]
-    .addEventListener("focusin", (event) => {
-      document.getElementsByTagName("input")[0].placeholder = "";
+    .getElementsByTagName('input')[0]
+    .addEventListener('focusin', (event) => {
+      document.getElementsByTagName('input')[0].placeholder = '';
     });
 
   // Sets searchfield placeholder text when focus is lost.
   document
-    .getElementsByTagName("input")[0]
-    .addEventListener("focusout", (event) => {
-      document.getElementsByTagName("input")[0].placeholder = "Location...";
+    .getElementsByTagName('input')[0]
+    .addEventListener('focusout', (event) => {
+      document.getElementsByTagName('input')[0].placeholder = 'Location...';
     });
 };
 init();
@@ -82,59 +82,59 @@ function getWeather() {
       const timestamp = getTime(date);
 
       // Select body element
-      const body = document.getElementsByTagName("body")[0];
+      const body = document.getElementsByTagName('body')[0];
       console.log(body.classList);
 
       // If length of the classes on body element equals 9, that means we already have a class assigned for the background image.
       // If so, we remove it so we later can add a new one.
       if (body.classList.length === 9) {
-        console.log("Removing old weatherclass..");
+        console.log('Removing old weatherclass..');
         body.classList.remove(body.classList[8]);
       }
 
       // Adding a new class for background to body element. For this, getBackgroundImage function is used.
       // Weathericon data is passed, as it holds information about both the weather and the time of day (day or night).
-      console.log("Adding new weatherclass..");
+      console.log('Adding new weatherclass..');
       body.classList.add(`${getBackgroundImage(weatherIcon)}`);
       console.log(body.classList);
 
       // Get the current content from template class and copy the node.
-      const template = document.querySelector(".template").content;
+      const template = document.querySelector('.template').content;
       const templateCopy = document.importNode(template, true);
 
       // Assign new data to templateCopy.
-      templateCopy.querySelector(".icon").src = iconUrl;
+      templateCopy.querySelector('.icon').src = iconUrl;
       templateCopy.querySelector(
-        ".location"
+        '.location'
       ).textContent = `The local weather at ${location}`;
-      templateCopy.querySelector(".date").textContent = currentDate;
-      templateCopy.querySelector(".currentTemp").textContent = `${temp}°C`;
-      templateCopy.querySelector(".maxTemp").textContent = `H:${tempMax}`;
-      templateCopy.querySelector(".minTemp").textContent = `L:${tempMin}`;
-      templateCopy.querySelector(".weatherDescription").textContent =
+      templateCopy.querySelector('.date').textContent = currentDate;
+      templateCopy.querySelector('.currentTemp').textContent = `${temp}°C`;
+      templateCopy.querySelector('.maxTemp').textContent = `H:${tempMax}`;
+      templateCopy.querySelector('.minTemp').textContent = `L:${tempMin}`;
+      templateCopy.querySelector('.weatherDescription').textContent =
         weatherDescription;
       templateCopy.querySelector(
-        ".lastUpdate"
+        '.lastUpdate'
       ).textContent = `(Last update: ${timestamp})`;
 
       // Get the weather-container.
-      const container = document.querySelector(".weather-container");
+      const container = document.querySelector('.weather-container');
 
       // If already showing weather, first clear the container from old data.
       if (container.hasChildNodes()) {
-        container.textContent = "";
+        container.textContent = '';
       }
       // Update using new data.
       container.appendChild(templateCopy);
-      console.log("Updated with new data!");
+      console.log('Updated with new data!');
     }
     // Clear old searchtext.
-    document.querySelector("#searchField").value = "";
+    document.querySelector('#searchField').value = '';
   };
 
   // Specify a GET request. Includes latitude, longitude and API key.
   weatherRequest.open(
-    "GET",
+    'GET',
     `https://api.openweathermap.org/data/2.5/weather?lat=${latLocation}&lon=${lonLocation}&appid=${API_KEY}&units=metric`,
     true
   );
